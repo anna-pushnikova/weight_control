@@ -46,7 +46,7 @@
               Enter the password.
             </div>
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <div class="custom-control custom-checkbox">
               <input
                 class="custom-control-input"
@@ -57,7 +57,7 @@
               />
               <label class="custom-control-label" for="rememberPasswordCheck">Remember password</label>
             </div>
-          </div>
+          </div> -->
           <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
             <router-link class="small" to="/password">Forgot Password?</router-link>
             <button class="btn btn-primary" type="submit">Login</button>
@@ -78,23 +78,42 @@ import { required, email } from 'vuelidate/lib/validators/'
 
 export default {
   data: () => ({
-    email: "",
-    password: "",
-    rememberPassword: false
+    email: '',
+    password: ''
   }),
   validations: {
     email: { required, email },
     password: { required }
   },
+  mounted() {
+    if(this.$route.query.message === 'logout') {
+      this.$toasted.show (
+      'You logged out', {
+        icon: 'check'
+      })
+    } 
+  },
   methods: {
-    submitHandler() {
+    async submitHandler() {
       if (this.$v.$invalid) {
         this.$v.$touch()
         return
       }
+      const formData = {
+        email: this.email ,
+        password: this.password
+      }
+      try {
+        await this.$store.dispatch('login', formData)
+        this.$router.push('/')
+        this.$toasted.show(
+        'You sucessfully logged in!', {
+          icon: 'check'
+        })
+      } catch(e) {}
     }
   }
-};
+}
 </script>
 
 <style>

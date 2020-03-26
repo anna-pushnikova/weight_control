@@ -57,11 +57,19 @@ export default {
     email: { required, email }
   },
   methods: {
-    submitHandler() {
+    async submitHandler() {
       if (this.$v.$invalid) {
         this.$v.$touch()
         return
       }
+      try {
+        await this.$store.dispatch('updatePassword', this.email)
+        this.$toasted.show(
+        'A password change link has been sent to your e-mail address!', {
+          icon: 'check'
+        })
+        
+      } catch(e) {}
     }
   }
 };

@@ -152,11 +152,26 @@ export default {
     confirmPassword: {sameAsPassword: sameAs('password')}
   },
   methods: {
-    submitHandler() {
-      if (this.$v.$invalid) {
+    async submitHandler() {
+      if(this.$v.$invalid) {
         this.$v.$touch()
         return
       }
+
+      const formData = {
+        email: this.email,
+        password: this.password,
+        firstName: this.firstName,
+        lastName: this.lastName
+      }
+      try {
+        await this.$store.dispatch('register', formData) 
+        this.$router.push('/')
+        this.$toasted.show(
+        'You sucessfully registered!', {
+          icon: 'check'
+        })
+      } catch (e) {'Error'}
     }
   }
 };

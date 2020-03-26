@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import firebase from 'firebase'
 
 Vue.use(VueRouter)
 
@@ -10,15 +11,54 @@ const routes = [
     name: 'Home',
     component: Home,
     meta: {
-      layout: 'main'
+      layout: 'main',
+      auth: true
     }
   },
   {
-    path: '/bmi',
-    name: 'BMI',
-    component: () => import('../views/Bmi.vue'),
+    path: '/statistics',
+    name: 'Statistics',
+    component: () => import('../views/Statistics.vue'),
     meta: {
-      layout: 'main'
+      layout: 'main',
+      auth: true
+    }
+  },
+  ,
+  {
+    path: '/history',
+    name: 'History',
+    component: () => import('../views/History.vue'),
+    meta: {
+      layout: 'main',
+      auth: true
+    }
+  },
+  {
+    path: '/new_record',
+    name: 'New Record',
+    component: () => import('../views/NewRecord.vue'),
+    meta: {
+      layout: 'main',
+      auth: true
+    }
+  },
+  {
+    path: '/overall',
+    name: 'Overall',
+    component: () => import('../views/Overall.vue'),
+    meta: {
+      layout: 'main',
+      auth: true
+    }
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('../views/Profile.vue'),
+    meta: {
+      layout: 'main',
+      auth: true
     }
   },
   {
@@ -42,10 +82,19 @@ const routes = [
   },
   {
     path: '/password',
-    name: 'Pssword',
+    name: 'Password',
     component: () => import(/* webpackChunkName: "about" */ '../views/Password.vue'),
     meta: {
       layout: 'empty'
+    }
+  },
+  {
+    path: '/edit_record',
+    name: 'Edit Record',
+    component: () => import(/* webpackChunkName: "about" */ '../views/EditRecord.vue'),
+    meta: {
+      layout: 'main',
+      auth: true
     }
   }
 ]
@@ -56,4 +105,17 @@ const router = new VueRouter({
   routes
 })
 
+
+router.beforeEach((to, from, next) => {
+  const currentUser = firebase.auth().currentUser
+  const requireAuth = to.matched.some(record => record.meta.auth)
+
+  if(requireAuth && !currentUser) {
+    next('/login?message=login')
+  } else {
+    next()
+  }
+})
+
 export default router
+

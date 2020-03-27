@@ -1,29 +1,29 @@
 <template>
-  <li class="nav-item dropdown">
-    <a
-      class="nav-link dropdown-toggle"
-      role="button"
+  <div class="nav-item dropdown">
+    <button
+      type="button"
+      class="btn dropdown-toggle"
       ref="dropdown"
     >
-      <i class="fas fa-user fa-fw"></i>
-    </a>
+      Edit last record
+    </button>
     <div 
       class="dropdown-content"
       ref="dropdownContent"
     >
       <router-link 
         class="dropdown-item" 
-        to="/profile"
+        to="/edit_record"
       >
-        Profile
+        Edit
       </router-link>
       <div class="dropdown-divider"></div>
       <a
         class="dropdown-item" 
-        @click="$emit('logout')"
-      >Logout</a>
+        @click="$emit('delete')"
+      >Delete</a>
     </div>
-  </li>
+  </div>
 </template>
 
 <script>

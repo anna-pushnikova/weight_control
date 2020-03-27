@@ -1,7 +1,7 @@
 <template>
   <div>
     <info/>
-    <h2 class="pb-5 pt-4">Change Profile Info</h2>
+    <h2 class="pb-5 pt-4">Set Profile Info</h2>
     <form @submit.prevent="submitHandler()" class="profile-form">
       <div class="row">
         <div class="col">
@@ -141,11 +141,13 @@ export default {
   methods: {
     ...mapActions(['updateData']),
     async submitHandler() {
+      //Validate forms 
       if (this.$v.$invalid) {
         this.$v.$touch()
         return
       }
-      
+
+      // Form data to send 
       const toSet = {
         firstName: this.firstName,
         lastName: this.lastName,
@@ -154,6 +156,8 @@ export default {
         goal: this.goal,
         sex: this.sex
       }
+
+      // Update data
       try {
         await this.updateData({
           ...toSet

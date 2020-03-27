@@ -46,26 +46,23 @@ export default {
   name: 'info',
   computed: {
     getFirstName() {
-      return this.$store.getters.info.firstName
+      return this.$store.getters.info.firstName 
     },
     getLastName() {
       return this.$store.getters.info.lastName
     },
     getAge() {
-      return this.$store.getters.info.age
+      return this.$store.getters.info.age 
     },
     getSex() {
-      return this.$store.getters.info.sex
+      return this.$store.getters.info.sex 
     },
     getHeight() {
-      return this.$store.getters.info.height
+      return this.$store.getters.info.height 
     },
     getGoal() {
-      return this.$store.getters.info.goal
+      return this.$store.getters.info.goal 
     }
-    
-
-   
   }
 }
 </script>

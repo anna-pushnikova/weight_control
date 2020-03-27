@@ -1,5 +1,16 @@
 <template>
-  <form @submit.prevent="submitHandler">
+<div>
+  <div v-if="!this.$store.getters.info.goal">
+    <p>You have not set up your Profile info.</p> 
+    <router-link
+      to="/profile"
+      class="profile-link"
+    >Click here</router-link>
+  </div>
+  <form 
+    @submit.prevent="submitHandler"
+    v-else
+  >
     <div class="form-group">
       <label for="datepicker">Select date to record the results</label>
       <Datepicker
@@ -30,6 +41,7 @@
 
     <button type="submit" class="btn btn-primary">Confirm</button>
   </form>
+</div>
 </template>
 
 <script>
@@ -47,33 +59,41 @@ export default {
     weight: { required }
   },
   data: () => ({
-    date: null,
+    date: '',
     weight: '',
-    prevWeight: null,
-    change: null,
-    records: null
+    prevWeight: '',
+    change: '',
+    records: []
   }),
   methods: {
-    ...mapActions(['createRecord', 'fetchRecords']),
     async submitHandler() {
-
+      // Validate forms
       if(this.$v.$invalid) {
         this.$v.$touch()
         return 
       }
+      // Fetch records 
+      this.records = await this.$store.dispatch('fetchRecords')
 
-      this.records = await this.fetchRecords()
-      
+      // Create first record
       if(!this.records.length) {
         this.change = '-' 
-      await this.createRecord ({
-        date: dateFilter(this.date),
-        change: this.change,
-        weight: this.weight
-      })
+        await this.$store.dispatch('createRecord', {
+          date: dateFilter(this.date),
+          change: this.change,
+          weight: this.weight
+        })
 
+        this.$toasted.show(
+          'New record was added!', {
+            icon: 'check'
+          })
+        return
+      }
+      
+      // Count weight change in comparison with the previous record
+      // '+' means gained weight
       this.prevWeight = this.records[this.records.length - 1].weight
- 
       this.change = this.weight - this.prevWeight 
 
       if (this.weight > this.prevWeight) {
@@ -85,22 +105,22 @@ export default {
         this.change = `-`
       }
       
-        await this.createRecord ({
-          date: dateFilter(this.date),
-          change: this.change,
-          weight: this.weight
-        })
-        this.$toasted.show(
-        'New record was added!', {
-          icon: 'check'
-        })
-      }
+      // Create record
+      await this.$store.dispatch('createRecord', {
+        date: dateFilter(this.date),
+        change: this.change,
+        weight: this.weight
+      })
+      this.$toasted.show(
+      'New record was added!', {
+        icon: 'check'
+      })
     }
   }
 }
 </script>
 
-<style scoped> 
+<style lang="scss" scoped> 
 #weight-value-input {
   background-color: #f6fafd;
   box-shadow: none;
@@ -154,6 +174,13 @@ export default {
 .vdp-datepicker__clear-button.input-group-append .input-group-text:active {
   background-color: rgb(237, 232, 241);
   border-color: rgb(219, 205, 231);
+}
+
+.profile-link {
+  color: rgb(155, 59, 240);
+  &:hover {
+    text-decoration: none;
+  }
 }
 /* s */
 </style>

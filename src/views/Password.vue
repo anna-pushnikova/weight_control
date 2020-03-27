@@ -58,10 +58,14 @@ export default {
   },
   methods: {
     async submitHandler() {
+
+      // Validate Forms 
       if (this.$v.$invalid) {
         this.$v.$touch()
         return
       }
+
+      // Update password
       try {
         await this.$store.dispatch('updatePassword', this.email)
         this.$toasted.show(

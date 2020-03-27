@@ -39,16 +39,25 @@ export default {
       {title: 'Overall', url: '/overall', icon_class: 'fas fa-chart-area'},
       {title: 'History', url: '/history', icon_class: 'fas fa-history'},
       {title: 'New Record', url: '/new_record', icon_class: 'fas fa-plus-circle'}
-    ],
-    loggedInUser: '',
-    firstName: '',
-    lastName: ''
+    ]
   }),
-  async mounted() {
-    await this.$store.dispatch('fetchData')
-    this.firstName = `${this.$store.getters.info.firstName}`
-    this.lastName = `${this.$store.getters.info.lastName}`
-    this.loggedInUser = `${this.firstName} ${this.lastName}`
+  props: {
+    info: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    firstName() {
+      return `${this.info.firstName}`
+    },
+    lastName() {
+      return `${this.info.lastName}`
+    },
+    loggedInUser() {
+      return `${this.firstName} ${this.lastName}`
+    }
+    
   }
 };
 </script>

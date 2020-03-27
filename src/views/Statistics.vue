@@ -5,6 +5,7 @@
   />
   <div class="container mt-5 text-center" v-else>
     <vue-speedometer
+      v-if="this.records.length"
       :width="500"
       :height="330"
       :dimensionUnit="'px'"
@@ -22,7 +23,10 @@
       needleTransition="easeElastic"
       :customSegmentStops="[16, 18.5, 25, 40]"
     />
-    <div class="box mb-5">
+    <div 
+      class="box mb-5"
+      v-if="this.records.length"
+    >
       <div class="tag">
         <div class="color blue"></div>
         <span>Underweight</span>
@@ -87,9 +91,16 @@ export default {
     loading: true
   }),
   async mounted() {
+    // Fetch records
     this.records = await this.$store.dispatch('fetchRecords')
-
-  
+    
+    // If there is not any record all fields are empty
+    if(!this.records.length) {
+      this.loading = false
+      return 
+    }
+    
+    // Count fields
     this.currWeight = this.records[this.records.length - 1].weight
     this.height = this.$store.getters.info.height
     this.bmi = (this.currWeight / (this.height/100) ** 2).toFixed(1)
@@ -98,6 +109,11 @@ export default {
   },
   computed: {
     getCategory() {
+      // If there is not any records field is empty
+      if(!this.records.length) {
+        return '-'
+      }
+      // Count Category
       if(this.bmi < 18.5) {
         return this.categories[0]
       } else if (this.bmi > 18.5 && this.bmi < 25) {
@@ -107,12 +123,19 @@ export default {
       }
     },
     countDiff() {
+      // If there is not any records field is empty
+      if(!this.records.length) {
+        return '-'
+      }
+
+      // Count BMI
       if(this.bmi > 18.5 && this.bmi < 25) {
         return `You have normal weight`
       }
+
+      // Count low and high limits of normal weight for the current user
       this.normalWeightLow = (18.5 * (this.height/100) ** 2).toFixed(0)
       this.normalWeightHigh = (25 * (this.height/100) ** 2).toFixed(0)
-
       if(this.bmi < 18.5) {
         return this.normalWeightLow - this.currWeight 
       } else {
@@ -120,6 +143,12 @@ export default {
       }
     },
     getNormalWeight() {
+      // If there is not any records field is empty
+      if(!this.records.length) {
+        return '-'
+      }
+
+      // Count normal weight
       if(this.bmi > 18.5 && this.bmi < 25) {
         return `You have normal weight`
       } else if (this.bmi < 18.5) {

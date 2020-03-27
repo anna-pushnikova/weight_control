@@ -95,14 +95,19 @@ export default {
   },
   methods: {
     async submitHandler() {
+      // Validate Forms
       if (this.$v.$invalid) {
         this.$v.$touch()
         return
       }
+
+      // Form fata to send
       const formData = {
         email: this.email ,
         password: this.password
       }
+
+      // Send Data
       try {
         await this.$store.dispatch('login', formData)
         this.$router.push('/')

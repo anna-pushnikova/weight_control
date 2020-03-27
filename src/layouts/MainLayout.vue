@@ -14,7 +14,9 @@
       @click="isOpen = !isOpen"
     />
     <div id="layoutSidenav">
-      <Sidebar/>
+      <Sidebar
+        :info="info"
+      />
       <div id="layoutSidenav_content">
         <main>
           <div class="container-fluid">
@@ -40,7 +42,8 @@ export default {
   name: 'mainLayout',
   data: () => ({
     isOpen: true,
-    loading: true
+    loading: true,
+    info: null
   }),
   components: {
     Navbar,
@@ -48,11 +51,10 @@ export default {
     Heading,
     Loader
   },
-  async created() {
-    // if(!Object.keys(this.$store.getters.info).length) {
-      
-      await this.$store.dispatch('fetchData')
-
+  async mounted() {
+    // Fetch info to pass it to Sidebar
+    await this.$store.dispatch('fetchData')
+    this.info = this.$store.getters.info
     this.loading = false
   }
 

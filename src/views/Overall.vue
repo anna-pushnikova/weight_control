@@ -58,36 +58,58 @@ import Loader from '@/components/app/Loader.vue'
 
 export default {
   data: () => ({
-    change: null,
+    change: '',
     remaining: null,
     average: null,
     allTimeHigh: null,
     allTimeLow: null,
     measurements: null,
-    loading: true
+    loading: true,
+    records: []
   }),
   components: {
     Loader
   },
   async mounted() {
-    const records = await this.$store.dispatch('fetchRecords')
-    const firstRecord = records[0].weight
-    const lastRecord = records[records.length - 1].weight
+    // Fetch records 
+    this.records = await this.$store.dispatch('fetchRecords')
+
+    // If there is not any record all fields are empty
+    if(!this.records.length) {
+      this.change = '-'
+      this.remaining = '-'
+      this.measurements = '-'
+      this.average = '-'
+      this.allTimeHigh = '-'
+      this.allTimeLow = '-'
+      this.loading = false
+      return 
+    }
+
+    // Count change between first and last records
+    const firstRecord = this.records[0].weight
+    const lastRecord = this.records[this.records.length - 1].weight
     this.change = lastRecord - firstRecord
     if (this.change > 0) {
       this.change = `+${this.change}`
     }
+
+    // Count remaining value to achieve goal
     const goal = this.$store.getters.info.goal
     this.remaining = goal - firstRecord
     
-    this.measurements = records.length
-    this.average = (records.reduce((total, r) => (total += r.weight), 0) / this.measurements).toFixed(1)
+    // Count measurements been taken
+    this.measurements = this.records.length
+
+    // Count records' average value 
+    this.average = (this.records.reduce((total, r) => (total += r.weight), 0) / this.measurements).toFixed(1)
     
-    const weightArr = records.map(r => r.weight)
+    // Count all-time-low and all-time-high weight
+    const weightArr = this.records.map(r => r.weight)
     this.allTimeLow = weightArr.reduce((prev, next) => Math.min(prev, next))
     this.allTimeHigh = weightArr.reduce((prev, next) => Math.max(prev, next))
-    this.loading = false
 
+    this.loading = falses
   }
 }
 </script>

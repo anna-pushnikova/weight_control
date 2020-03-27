@@ -24,14 +24,12 @@ import { mapActions } from 'vuex'
 export default {
   data: () => ({
     weight: '',
-    // dateSelectedData: null,
     records: [],
     id: null,
     date: null,
     changedWeight: null
   }),
   validations: {
-    // dateSelectedData: { required },
     weight: { required }
   },
   async mounted() {
@@ -40,21 +38,28 @@ export default {
   methods: {
     ...mapActions(['updateRecord']),
     async submitHandler() {
+
+      // Validate forms
       if (this.$v.$invalid) {
         this.$v.$touch()
         return 
       }
-
-    const lastRecord = this.records[this.records.length - 1]
     
+    // Fetch data of last records to edit
+    const lastRecord = this.records[this.records.length - 1]
     this.date = lastRecord.date
     this.id = lastRecord.id
-
-    const numericVal = lastRecord.change.match(/\d+/g).map(Number)
     
+    // Change 'change field' of previous record to current one 
+
+    // Get number from a string to change 'change field'
+    const numericVal = lastRecord.change.match(/\d+/g).map(Number)
+    // Check if the string contains a negative number
     if (lastRecord.change.includes('-')) {
       numericVal = -Math.abs(numericVal)
     } 
+
+    // Count weight change according to the last record
     this.changedWeight = +this.weight - +lastRecord.weight
     this.changedWeight = +this.changedWeight + +numericVal
     if (this.changedWeight > 0) {
@@ -62,7 +67,8 @@ export default {
     } else if (this.changedWeight < 0) {
       this.changedWeight = `-${this.changedWeight} kg`
     } 
-
+    
+    // Form changed data to send
     const formData = {
       id: this.id,
       date: this.date,
@@ -70,6 +76,7 @@ export default {
       change: this.changedWeight
     }
     
+    // Send changed data
     try {
       await this.$store.dispatch('updateRecord', formData)
       this.$toasted.show(

@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <div class="row text-center" v-show="!loading">
+    <div class="row text-center" v-show="!loading && this.records.length">
       <div class="col-xl-12">
         <div class="card mb-4">
           <div class="card-header">
@@ -52,7 +52,7 @@ import Loader from "@/components/app/Loader.vue";
 export default {
   data: () => ({
     currentVal: null,
-    records: null,
+    records: [],
     startVal: null,
     goal: null,
     loading: true
@@ -62,12 +62,24 @@ export default {
   },
   extends: Line,
   async mounted() {
+    // Fetch records
+    this.records = await this.$store.dispatch('fetchRecords')
 
-    this.records = await this.$store.dispatch("fetchRecords");
-    
+    // If there is not any record all fields are empty
+    if(!this.records.length) {
+      this.currentVal = '-'
+      this.startVal = '-'
+      this.goal = this.$store.getters.info.goal
+      this.loading = false
+      return
+    }
+
+    // Count fields
     this.currentVal = this.records[this.records.length - 1].weight;
-    this.startVal = this.records[0].weight;
-    this.goal = this.$store.getters.info.goal;
+    this.startVal = this.records[0].weight
+    this.goal = this.$store.getters.info.goal
+    
+    // Render chart function
     this.renderChart({
       labels: this.records.map(r => r.date),
       datasets: [
@@ -96,7 +108,8 @@ export default {
       options: {
         responsive: true
       }
-    });
+    })
+
     this.loading = false;
   }
 };

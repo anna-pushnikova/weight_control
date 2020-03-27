@@ -3,30 +3,30 @@ import Vue from 'vue'
 
 export default {
   actions: {
-    async register({dispatch}, {email, password, firstName, lastName}) {
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-        .catch(function(error) {
-          let errorCode = error.code
-          let errorMessage = error.message
-
-          if (errorCode === 'auth/email-already-in-use') {
-            Vue.toasted.show (
-              errorMessage, {
-              icon: 'exclamation-triangle'
-            })
-          }
-        })
+    async register({commit, dispatch}, credentials) {
       try {
+        const email = credentials.email
+        const password = credentials.password
+        const firstName = credentials.firstName
+        const lastName = credentials.lastName
         await firebase.auth().createUserWithEmailAndPassword(email, password)
         const uid = await dispatch('getUid')
-        await firebase.database().ref(`/users/${uid}/info`).set({
-          firstName,
-          lastName
-        })
+        await firebase.database().ref(`/users/${uid}/info`).set({firstName, lastName})
+
       } catch (e) {
+        console.log(e)
+        let errorCode = e.code
+        let errorMessage = e.message
+
+        if (errorCode === 'auth/email-already-in-use') {
+          Vue.toasted.show (
+            errorMessage, {
+            icon: 'exclamation-triangle'
+          })
+        }
         commit('setError')
         throw e
-      } 
+      }
     },
     getUid() {
       const user = firebase.auth().currentUser

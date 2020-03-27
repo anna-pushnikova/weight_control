@@ -9,7 +9,7 @@ export default {
       state.info = info
     },
     clearInfo(state) {
-      state.info = null
+      state.info = {}
     }
   },
   actions: {
@@ -18,7 +18,10 @@ export default {
         const uid = await dispatch('getUid')
         const info = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val() 
         commit('setInfo', info)
-      } catch(e) {}
+      } catch(e) {
+        console(e)
+        alert(e)
+      }
     },
     async updateData({dispatch, commit}, toSet) {
       try {
@@ -31,6 +34,7 @@ export default {
 
   },
   getters: {
-    info: s => s.info
+    info: s => s.info,
+    profileInfo: s => !s.info.goal && !s.info.height
   }
 }

@@ -6,13 +6,21 @@
     <div 
       class="col-xl-12"
       v-else
-    >
-      <div class="card-body">
+    > 
+      <p
+        v-if="!this.history.length"
+      > You have not records yet
+
+      </p>
+      <div 
+        class="card-body"
+        v-else
+      >
         <table class="table table-hover">
           <tbody>
             <Dropdown 
               class="text-left"
-              @click="onClick"
+              @delete="onClick"
             />
             <tr 
             v-for="his in history"
@@ -39,7 +47,7 @@ export default {
     history: []
   }),
   components: { 
-    Dropdown: () => import('./../components/Dropdown.vue'),
+    Dropdown: () => import('@/components/app/HistoryDropdown.vue'),
     Loader
   },
   async mounted() {
@@ -49,8 +57,11 @@ export default {
   methods: {
     async onClick() {
       this.loading = true
+
+      // Delete record by id
       const id = this.history[this.history.length - 1].id
       await this.$store.dispatch('deleteRecord', { id })
+      // Fetch records
       this.history = await this.$store.dispatch('fetchRecords')
 
       

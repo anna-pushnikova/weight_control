@@ -153,25 +153,40 @@ export default {
   },
   methods: {
     async submitHandler() {
+      //Validate Forms
       if(this.$v.$invalid) {
         this.$v.$touch()
         return
       }
-
-      const formData = {
+      
+      // Form data to send
+      const credentials = {
         email: this.email,
         password: this.password,
         firstName: this.firstName,
         lastName: this.lastName
-      }
+      } 
+      // Send data
       try {
-        await this.$store.dispatch('register', formData) 
+        await this.$store.dispatch('register', credentials) 
         this.$router.push('/')
         this.$toasted.show(
-        'You sucessfully registered!', {
+        'You were registered!', {
           icon: 'check'
         })
-      } catch (e) {'Error'}
+      } catch(e) {
+        debugger
+        console.log(e)
+        let errorCode = e.code
+        let errorMessage = e.message
+
+        if (errorCode === 'auth/email-already-in-use') {
+          this.$toasted.show (
+            errorMessage, {
+            icon: 'exclamation-triangle'
+          })
+        }
+      }
     }
   }
 };

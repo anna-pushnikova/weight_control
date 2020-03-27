@@ -69,7 +69,7 @@ export default {
     if(!this.records.length) {
       this.currentVal = '-'
       this.startVal = '-'
-      this.goal = this.$store.getters.info.goal
+      this.goal = this.$store.getters.info.goal || '-'
       this.loading = false
       return
     }

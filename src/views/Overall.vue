@@ -109,7 +109,7 @@ export default {
     this.allTimeLow = weightArr.reduce((prev, next) => Math.min(prev, next))
     this.allTimeHigh = weightArr.reduce((prev, next) => Math.max(prev, next))
 
-    this.loading = falses
+    this.loading = false
   }
 }
 </script>

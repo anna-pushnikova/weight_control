@@ -36,7 +36,7 @@
               v-model="password"
               :class="{ 
                 'is-invalid': $v.password.$dirty && !$v.password.required,
-                'is-valid': !(($v.password.$dirty && !$v.password.required))
+                'is-valid': $v.password.$dirty && $v.password.required
               }"
             />
             <div 
@@ -46,18 +46,6 @@
               Enter the password.
             </div>
           </div>
-          <!-- <div class="form-group">
-            <div class="custom-control custom-checkbox">
-              <input
-                class="custom-control-input"
-                id="rememberPasswordCheck"
-                type="checkbox"
-                v-model="rememberPassword"
-                @click="!rememberPassword"
-              />
-              <label class="custom-control-label" for="rememberPasswordCheck">Remember password</label>
-            </div>
-          </div> -->
           <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
             <router-link class="small" to="/password">Forgot Password?</router-link>
             <button class="btn btn-primary" type="submit">Login</button>

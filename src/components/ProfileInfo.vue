@@ -52,7 +52,7 @@ export default {
       return this.$store.getters.info.lastName
     },
     getAge() {
-      return this.$store.getters.info.age 
+      return this.$store.getters.info.age
     },
     getSex() {
       return this.$store.getters.info.sex 

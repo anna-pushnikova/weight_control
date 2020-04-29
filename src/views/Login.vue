@@ -17,12 +17,10 @@
               :class="{ 
                 'is-invalid': ($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email),
                 'is-valid': ($v.email.$dirty && $v.email.required) || ($v.email.$dirty && $v.email.email)
-              }"
-            />
+              }"/>
             <div 
               class="invalid-feedback"
-              v-if="(($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email))"
-            >
+              v-if="(($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email))">
               Enter the email.
             </div>
           </div>
@@ -37,12 +35,10 @@
               :class="{ 
                 'is-invalid': $v.password.$dirty && !$v.password.required,
                 'is-valid': $v.password.$dirty && $v.password.required
-              }"
-            />
+              }"/>
             <div 
               class="invalid-feedback"
-              v-if="$v.password.$dirty && !$v.password.required"
-            >
+              v-if="$v.password.$dirty && !$v.password.required">
               Enter the password.
             </div>
           </div>

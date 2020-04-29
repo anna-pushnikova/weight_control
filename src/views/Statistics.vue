@@ -21,12 +21,10 @@
       :needleColor="'#dfdfdf'"
       :needleTransitionDuration="4000"
       needleTransition="easeElastic"
-      :customSegmentStops="[16, 18.5, 25, 40]"
-    />
+      :customSegmentStops="[16, 18.5, 25, 40]"/>
     <div 
       class="box mb-5"
-      v-if="this.records.length"
-    >
+      v-if="this.records.length">
       <div class="tag">
         <div class="color blue"></div>
         <span>Underweight</span>
@@ -59,7 +57,7 @@
                 <tr>
                   <td>{{getCategory}}</td>
                   <td>{{getNormalWeight}}</td>
-                  <td>{{countDiff}}</td>
+                  <td>{{countDiff | weightfilter}}</td>
                 </tr>
               </tbody>
             </table>

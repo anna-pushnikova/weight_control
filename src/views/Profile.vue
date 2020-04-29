@@ -12,8 +12,7 @@
               class="form-control"
               id="weight-value-input"
               placeholder="Enter name"
-              v-model="firstName"
-            />
+              v-model="firstName"/>
             <small v-if="$v.firstName.$dirty && !$v.firstName.required" class="form-text text-muted">
               Enter first name
             </small>
@@ -27,8 +26,7 @@
               class="form-control"
               id="weight-value-input"
               placeholder="Enter last name"
-              v-model="lastName"
-            />
+              v-model="lastName"/>
             <small v-if="$v.lastName.$dirty && !$v.lastName.required" class="form-text text-muted">
               Enter last name
             </small>
@@ -45,9 +43,8 @@
               id="weight-value-input"
               placeholder="Enter age"
               v-model.number="age"
-              min="1"
-              max="170"
-            />
+              min="25"
+              max="275"/>
             <small v-if="$v.age.$dirty && !$v.age.required" class="form-text text-muted">
               Enter age
             </small>
@@ -59,8 +56,7 @@
             <select 
               class="custom-select"
               id="inputGroupSelect02"
-              v-model="sex"
-            >
+              v-model="sex">
               <option selected>Select</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -82,8 +78,7 @@
               placeholder="Enter height"
               v-model.number="height"
               min="50"
-              max="275"
-            />
+              max="275"/>
             <small v-if="$v.height.$dirty && !$v.height.required" class="form-text text-muted">
               Enter height
             </small>
@@ -99,8 +94,7 @@
               placeholder="Enter weight goal"
               v-model.number="goal"
               min="25"
-              max="275"
-            />
+              max="275"/>
             <small v-if="$v.goal.$dirty && !$v.goal.required" class="form-text text-muted">
               Enter weight goal
             </small>

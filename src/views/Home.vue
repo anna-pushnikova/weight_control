@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <div class="row text-center" v-show="!loading && this.records.length">
+    <div class="row text-center" v-show="!loading && records.length > 1">
       <div class="col-xl-12">
         <div class="card mb-4">
           <div class="card-header">
@@ -48,6 +48,7 @@
 <script>
 import { Line } from "vue-chartjs";
 import Loader from "@/components/app/Loader.vue";
+import dateFilter from '@/filter/date.filter.js'
 
 export default {
   data: () => ({
@@ -61,27 +62,29 @@ export default {
     Loader
   },
   extends: Line,
-  async mounted() {
+  async created() {
     // Fetch records
-    this.records = await this.$store.dispatch('fetchRecords')
-
+    this.loading = true
+      this.records = await this.$store.dispatch('fetchRecords')
+      this.loading = false
+    
     // If there is not any record all fields are empty
     if(!this.records.length) {
-      this.currentVal = '-'
-      this.startVal = '-'
+      this.currentVal = this.$store.getters.info.weight || '-'
+      this.startVal = this.$store.getters.info.weight || '-'
       this.goal = this.$store.getters.info.goal || '-'
       this.loading = false
       return
     }
 
     // Count fields
-    this.currentVal = this.records[this.records.length - 1].weight;
+    this.currentVal = this.records[this.records.length - 1].weight
     this.startVal = this.records[0].weight
     this.goal = this.$store.getters.info.goal
     
     // Render chart function
     this.renderChart({
-      labels: this.records.map(r => r.date),
+      labels: this.records.map(r => dateFilter(r.date)),
       datasets: [
         {
           label: "Kg",
@@ -109,15 +112,22 @@ export default {
         responsive: true
       }
     })
-
     this.loading = false;
+  },
+  methods: {
+    async loadRecords() {
+      this.loading = true
+      this.records = await this.$store.dispatch('fetchRecords')
+      this.loading = false
+    }
   }
 };
 </script>
 
-<style>
+<style lang="scss">
 
 Loader {
   position: absolute;
 }
+
 </style>

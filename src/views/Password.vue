@@ -6,8 +6,7 @@
       </div>
       <div class="card-body">
         <div
-          class="small mb-3 text-muted"
-        >
+          class="small mb-3 text-muted">
         Enter your email address and we will send you a link to reset your password.
         </div>
         <form @submit.prevent="submitHandler">
@@ -23,12 +22,10 @@
               :class="{ 
                 'is-invalid': (($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email)),
                 'is-valid': (($v.email.$dirty && $v.email.required) || ($v.email.$dirty && $v.email.email))
-              }"
-            />
+              }"/>
             <div 
               class="invalid-feedback"
-              v-if="(($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email))"
-            >
+              v-if="(($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email))">
               Enter the email.
             </div>
           </div>

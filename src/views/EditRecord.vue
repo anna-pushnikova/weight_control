@@ -9,8 +9,7 @@
         placeholder="Enter weight value"
         min="1"
         max="500"
-        v-model.number="weight"
-      />
+        v-model.number="weight"/>
     <small v-if="$v.weight.$dirty && !$v.weight.required" class="form-text text-muted">Weight field should be selected</small>
     </div>
     <button type="submit" class="btn btn-primary">Confirm</button>
@@ -25,14 +24,15 @@ export default {
   data: () => ({
     weight: '',
     records: [],
-    id: null,
-    date: null,
-    changedWeight: null
+    id: '',
+    date: '',
+    changedWeight: '',
+    change: ''
   }),
   validations: {
     weight: { required }
   },
-  async mounted() {
+  async created() {
     this.records = await this.$store.dispatch('fetchRecords')
   },
   methods: {
@@ -49,24 +49,11 @@ export default {
     const lastRecord = this.records[this.records.length - 1]
     this.date = lastRecord.date
     this.id = lastRecord.id
-    
-    // Change 'change field' of previous record to current one 
-
-    // Get number from a string to change 'change field'
-    const numericVal = lastRecord.change.match(/\d+/g).map(Number)
-    // Check if the string contains a negative number
-    if (lastRecord.change.includes('-')) {
-      numericVal = -Math.abs(numericVal)
-    } 
+    this.change = lastRecord.change
 
     // Count weight change according to the last record
     this.changedWeight = +this.weight - +lastRecord.weight
-    this.changedWeight = +this.changedWeight + +numericVal
-    if (this.changedWeight > 0) {
-      this.changedWeight = `+${this.changedWeight} kg`
-    } else if (this.changedWeight < 0) {
-      this.changedWeight = `-${this.changedWeight} kg`
-    } 
+    this.changedWeight = +this.changedWeight + +this.change
     
     // Form changed data to send
     const formData = {

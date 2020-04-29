@@ -19,12 +19,10 @@
                   :class="{ 
                     'is-invalid': ($v.firstName.$dirty && !$v.firstName.required),
                     'is-valid': ($v.firstName.$dirty && $v.firstName.required) 
-                  }"
-                />
+                  }"/>
                 <div 
                   class="invalid-feedback"
-                  v-if="$v.firstName.$dirty && !$v.firstName.required"
-                >
+                  v-if="$v.firstName.$dirty && !$v.firstName.required">
                   Enter first name.
                 </div>
               </div>
@@ -41,12 +39,10 @@
                   :class="{ 
                     'is-invalid': ($v.lastName.$dirty && !$v.lastName.required),
                     'is-valid': ($v.lastName.$dirty && $v.lastName.required) 
-                  }"
-                />
+                  }"/>
                 <div 
                   class="invalid-feedback"
-                  v-if="$v.lastName.$dirty && !$v.lastName.required"
-                >
+                  v-if="$v.lastName.$dirty && !$v.lastName.required">
                   Enter last name.
                 </div>
               </div>
@@ -64,12 +60,10 @@
               :class="{ 
                 'is-invalid': (($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email)),
                 'is-valid': (($v.email.$dirty && $v.email.required) || ($v.email.$dirty && $v.email.email))
-              }"
-            />
+              }"/>
             <div 
               class="invalid-feedback"
-              v-if="(($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email))"
-            >
+              v-if="(($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email))">
               Enter the email.
             </div>
           </div>
@@ -86,8 +80,7 @@
                   :class="{ 
                     'is-invalid': (($v.password.$dirty && !$v.password.required) || ($v.password.$dirty && !$v.password.minLength)),
                     'is-valid': (($v.password.$dirty && $v.password.required) || ($v.password.$dirty && $v.password.minLength))
-                  }"
-                />
+                  }"/>
                 <div 
                   class="invalid-feedback"
                   v-if="$v.password.$dirty && !$v.password.minLength"
@@ -108,12 +101,10 @@
                   :class="{ 
                     'is-invalid': (($v.confirmPassword.$dirty && !$v.confirmPassword.sameAsPassword) || ($v.confirmPassword.$dirty && !$v.confirmPassword.required)),
                     'is-valid': (($v.confirmPassword.$dirty && $v.confirmPassword.sameAsPassword) || ($v.confirmPassword.$dirty && $v.confirmPassword.required))
-                  }"
-                />
+                  }"/>
                 <div
                   class="invalid-feedback"
-                  v-if="$v.confirmPassword.$dirty && !$v.confirmPassword.sameAsPassword"
-                >
+                  v-if="$v.confirmPassword.$dirty && !$v.confirmPassword.sameAsPassword">
                   Passwords do not match.
                 </div>
               </div>

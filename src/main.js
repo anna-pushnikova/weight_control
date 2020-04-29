@@ -14,10 +14,12 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toasted from 'vue-toasted';
 
 import dateFilter from '@/filter/date.filter.js'
+import weightFilter from '@/filter/changeWeight.filter.js'
+import datetimeFilter from '@/filter/datetime.filter.js'
+import dayFilter from '@/filter/day.filter.js'
 
 library.add(faUserSecret)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-
 
 Vue.config.productionTip = false
 Vue.use(vuelidate)
@@ -31,7 +33,9 @@ Vue.use(Toasted, {
 })
 
 Vue.filter('datefilter', dateFilter)
-
+Vue.filter('weightfilter', weightFilter)
+Vue.filter('datetimefilter', datetimeFilter)
+Vue.filter('dayfilter', dayFilter)
 
 firebase.initializeApp({
   apiKey: "AIzaSyDK0u2YWFePDSmpU4HTrZGNf_sD4ClKcHg",

@@ -14,8 +14,8 @@
         </thead>
         <tbody>
           <tr>
-            <td>{{change}}</td>
-            <td>{{remaining}}</td>
+            <td>{{change | weightfilter}}</td>
+            <td>{{remaining | weightfilter}}</td>
           </tr>
         </tbody>
       </table>
@@ -70,7 +70,7 @@ export default {
   components: {
     Loader
   },
-  async mounted() {
+  async created() {
     // Fetch records 
     this.records = await this.$store.dispatch('fetchRecords')
 
@@ -90,6 +90,7 @@ export default {
     const firstRecord = this.records[0].weight
     const lastRecord = this.records[this.records.length - 1].weight
     this.change = lastRecord - firstRecord
+
     if (this.change > 0) {
       this.change = `+${this.change}`
     }

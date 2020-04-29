@@ -4,13 +4,13 @@
     <p>You have not set up your Profile info.</p> 
     <router-link
       to="/profile"
-      class="profile-link"
-    >Click here</router-link>
+      class="profile-link">
+      Click here
+    </router-link>
   </div>
   <form 
     @submit.prevent="submitHandler"
-    v-else
-  >
+    v-else>
     <div class="form-group">
       <label for="datepicker">Select date to record the results</label>
       <Datepicker
@@ -21,8 +21,7 @@
         calendar-button
         required
         :calendar-button-icon="'fa fa-calendar'"
-        id="datepicker"
-      />
+        id="datepicker"/>
       <small v-if="$v.date.$dirty && !$v.date.required" class="form-text text-muted">Date should be selected</small>
     </div>
     <div class="form-group">
@@ -34,8 +33,7 @@
         placeholder="Enter weight value"
         min="1"
         max="500"
-        v-model.number="weight"
-      />
+        v-model.number="weight"/>
       <small v-if="$v.weight.$dirty && !$v.weight.required" class="form-text text-muted weight-value">Weight field should be selected</small>
     </div>
 
@@ -77,9 +75,9 @@ export default {
 
       // Create first record
       if(!this.records.length) {
-        this.change = '-' 
+        this.change = null
         await this.$store.dispatch('createRecord', {
-          date: dateFilter(this.date),
+          date: +this.date,
           change: this.change,
           weight: this.weight
         })
@@ -96,18 +94,9 @@ export default {
       this.prevWeight = this.records[this.records.length - 1].weight
       this.change = this.weight - this.prevWeight 
 
-      if (this.weight > this.prevWeight) {
-        this.change = `+${this.change} kg`
-      } 
-      else if (this.weight < this.prevWeight) {
-        this.change = `${this.change} kg`
-      } else {
-        this.change = `-`
-      }
-      
       // Create record
       await this.$store.dispatch('createRecord', {
-        date: dateFilter(this.date),
+        date: +this.date,
         change: this.change,
         weight: this.weight
       })
@@ -157,7 +146,7 @@ export default {
 
 .prev,
 .next,
-.vdp-datepicker__calendar .cell.selected {
+.vdp-datepicker__calendar.cell.selected {
   background: #b2a3d62e !important;
 }
 

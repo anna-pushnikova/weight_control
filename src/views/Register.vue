@@ -166,8 +166,6 @@ export default {
           icon: 'check'
         })
       } catch(e) {
-        debugger
-        console.log(e)
         let errorCode = e.code
         let errorMessage = e.message
 

@@ -27,6 +27,6 @@ export default {
 <style>
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
-@import '../public/styles.css';
+@import './assets/styles.css';
 
 </style>

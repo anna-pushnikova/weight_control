@@ -35,6 +35,7 @@ export default {
     async login({commit}, {email, password}) {
       firebase.auth().signInWithEmailAndPassword(email, password)
         .catch(function(error) {
+          console.log(error)
           let errorCode = error.code
           let errorMessage = error.message
 
@@ -59,7 +60,9 @@ export default {
         await firebase.auth().signInWithEmailAndPassword(email, password)
       } catch(e) {
           commit('setError')
+          console.log(e)
           throw e
+
       }
     },
     async logout({commit}) {

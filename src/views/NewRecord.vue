@@ -1,7 +1,7 @@
 <template>
 <div>
   <div v-if="!this.$store.getters.info.goal">
-    <p>You have not set up your Profile info.</p> 
+    <p>You have not set your profile info</p> 
     <router-link
       to="/profile"
       class="profile-link">
@@ -12,7 +12,7 @@
     @submit.prevent="submitHandler"
     v-else>
     <div class="form-group">
-      <label for="datepicker">Select date to record the results</label>
+      <label for="datepicker">Select date to record results</label>
       <Datepicker
         :bootstrap-styling="true"
         v-model="date"

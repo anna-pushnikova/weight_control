@@ -38,16 +38,15 @@ Vue.filter('datetimefilter', datetimeFilter)
 Vue.filter('dayfilter', dayFilter)
 
 firebase.initializeApp({
-  apiKey: "AIzaSyDK0u2YWFePDSmpU4HTrZGNf_sD4ClKcHg",
-  authDomain: "weight-control-2cafe.firebaseapp.com",
-  databaseURL: "https://weight-control-2cafe.firebaseio.com",
-  projectId: "weight-control-2cafe",
-  storageBucket: "weight-control-2cafe.appspot.com",
-  messagingSenderId: "89404611221",
-  appId: "1:89404611221:web:3894c9d463236d5a23599c",
-  measurementId: "G-FYHP35M7RJ"
+  apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
+  authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.VUE_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.VUE_APP_FIREBASE_APP_ID,
+  measurementId: process.env.VUE_APP_FIREBASE_MEASUREMENT_ID
 });
-
 
 let app; 
 

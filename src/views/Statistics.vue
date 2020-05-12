@@ -3,7 +3,7 @@
   <Loader
     v-if="loading"
   />
-  <div class="container mt-5 text-center" v-else>
+  <div class="text-center" v-else>
     <vue-speedometer
       v-if="this.records.length"
       :width="500"

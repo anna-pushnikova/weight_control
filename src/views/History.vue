@@ -99,11 +99,6 @@ export default {
 </script>
 
 <style lang="scss">
-.card-header {
-  background-color: #e7e0f5;
-  border-bottom: none;
-}
-
 .pagination {
   display: flex;
   align-items: center;

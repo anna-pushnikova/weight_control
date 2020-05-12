@@ -22,7 +22,7 @@ export default {
 
 .spinner {
   position: absolute;
-  top: 200px;
+  top: 50%;
   left: 0;
   width: 100%;
   height: 100%;

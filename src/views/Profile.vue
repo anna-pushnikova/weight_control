@@ -1,7 +1,7 @@
 <template>
   <div>
     <info/>
-    <h2 class="pb-5 pt-4">Set Profile Info</h2>
+    <h2 class="py-4">Set Profile Info</h2>
     <form @submit.prevent="submitHandler()" class="profile-form">
       <div class="row">
         <div class="col">

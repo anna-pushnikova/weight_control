@@ -1,6 +1,6 @@
 <template>
   <div class="contain-loader">
-    <Loader v-if="loading" />
+    <Loader v-if="loading"/>
    
     <div class="row text-center" v-show="!loading">
       <div class="col-xl-12">
@@ -65,8 +65,7 @@ export default {
   async created() {
     // Fetch records
     this.loading = true
-      this.records = await this.$store.dispatch('fetchRecords')
-      this.loading = false
+    this.records = await this.$store.dispatch('fetchRecords')
     
     // If there is not any record all fields are empty
     if(!this.records.length) {

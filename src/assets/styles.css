@@ -6085,7 +6085,11 @@ a.close.disabled {
 }
 
 .bg-primary {
-  background: linear-gradient(45deg, #8266FA,#E391F7) !important;
+  background: #fff url('./images/auth_bg.jpg') !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center center !important;
+
 }
 
 a.bg-primary:hover, a.bg-primary:focus,

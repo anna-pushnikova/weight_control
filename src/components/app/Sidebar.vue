@@ -62,14 +62,18 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
+.sb-sidenav-footer {
+  cursor: default;
+}
 
 .sb-sidenav-footer .small{
   color: #fff;
 }
 
 .sb-sidenav-footer .small:hover{
-  color: rgb(248, 232, 255);
+  color: #aa77f8;
+  cursor: default;
 }
 
 </style>

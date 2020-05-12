@@ -43,8 +43,8 @@
               id="weight-value-input"
               placeholder="Enter age"
               v-model.number="age"
-              min="25"
-              max="275"/>
+              min="0"
+              max="150"/>
             <small v-if="$v.age.$dirty && !$v.age.required" class="form-text text-muted">
               Enter age
             </small>
